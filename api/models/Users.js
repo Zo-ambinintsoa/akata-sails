@@ -9,6 +9,10 @@ module.exports = {
         profile: {
             model: 'Profiles'
         },
+        notify : {
+            collection: 'notify',
+            via: 'owner',
+        },
         name: {
             type: 'string',
             required: true,
@@ -60,25 +64,17 @@ module.exports = {
         return _.omit(this, ['password', 'lastPasswordFailure', 'isSuperAdmin', 'is_active', 'locked', 'resetToken']);
     },
 
-    beforeCreate: function(user, cb) {
-        bcrypt.genSalt(10, function(err, salt) {
-            bcrypt.hash(user.password, salt, null, function(err, hash) {
-                if (err) return cb(err);
-                user.password = hash;
-                return cb();
-            });
-        });
-    },
+    beforeCreate: function(values, next) {
+        let crypto = require('crypto');
+        values.password = crypto.createHash('sha256').update(values.password).digest('base64');;
 
-    comparePassword: function(password, encryptedPassword, callback) {
-        bcrypt.compare(password, encryptedPassword, function(error, match) {
-            if (error) callback(error);
-            if (match) {
-                callback(null, true);
-            } else {
-                callback(error);
-            }
-        });
+        next();
+    },
+    beforeUpdate: function(values, next) {
+        let crypto = require('crypto');
+        values.password = crypto.createHash('sha256').update(values.password).digest('base64');;
+
+        next();
     },
 
     /* ===================== GENERATE CODE =============================================================================================================================================================================================

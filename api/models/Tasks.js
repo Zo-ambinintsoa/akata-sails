@@ -32,7 +32,7 @@ module.exports = {
             required: false
         },
         estimated_start: {
-            type: 'string',
+            type: 'ref', columnType: 'datetime',
             required: false,
             example: 'YYY-MM-DD'
         },
@@ -65,11 +65,8 @@ module.exports = {
     },
     beforeCreate: function(values, next) {
         const moment = require('moment');
-
         if (values.estimated_start) {
-            let date = values.estimated_start.split('/');
-            let format = date[2] + '-' + date[1] + '-' + date[0];
-            values.estimated_start = moment(format).format('YYYY-MM-DD');
+            values.estimated_start = moment().format('YYYY-MM-DD');
         }
 
         next();
@@ -79,9 +76,7 @@ module.exports = {
         const math = require('mathjs');
 
         if (values.estimated_start) {
-            let date = values.estimated_start.split('/');
-            let format = date[2] + '-' + date[1] + '-' + date[0];
-            values.estimated_start = moment(format).format('YYYY-MM-DD');
+            values.estimated_start = moment().format('YYYY-MM-DD');
         }
 
         if (values.real_effort) {

@@ -27,28 +27,28 @@ module.exports = {
             required: false
         },
         estimated_start: {
-            type: 'string',
+            type: 'ref', columnType: 'datetime',
             required: true,
             example: 'YYY-MM-DD'
         },
         estimated_end: {
-            type: 'string',
+            type: 'ref', columnType: 'datetime',
             required: true,
             example: 'YYY-MM-DD'
         },
         real_start: {
-            type: 'string',
+            type: 'ref', columnType: 'datetime',
             required: false,
             example: 'YYY-MM-DD'
         },
         real_end: {
-            type: 'string',
+            type: 'ref', columnType: 'datetime',
             required: false,
             example: 'YYY-MM-DD'
         },
         progress_percentage: {
             type: 'number',
-            example: '50', // 50% of progress
+            example: '50',
             defaultsTo: 0
         },
         justification: {
@@ -83,58 +83,34 @@ module.exports = {
     },
     beforeCreate: function(values, next) {
         const moment = require('moment');
-
-        if (values.estimated_start.length) {
-            let date = values.estimated_start.split('/');
-            let format = date[2] + '-' + date[1] + '-' + date[0];
-            values.estimated_start = moment(format).format('YYYY-MM-DD');
+        if (values.estimated_start) {
+            values.estimated_start = moment().format('YYYY-MM-DD');
+        }        
+        if (values.estimated_end) {
+            values.estimated_end = moment().format('YYYY-MM-DD');
         }
-
-        if (values.estimated_end.length) {
-            let date = values.estimated_end.split('/');
-            let format = date[2] + '-' + date[1] + '-' + date[0];
-            values.estimated_end = moment(format).format('YYYY-MM-DD');
+        if (values.real_start) {
+            values.real_start = moment().format('YYYY-MM-DD');
         }
-
-        if (values.real_start.length) {
-            let date = values.real_start.split('/');
-            let format = date[2] + '-' + date[1] + '-' + date[0];
-            values.real_start = moment(format).format('YYYY-MM-DD');
-        }
-
-        if (values.real_end.length) {
-            let date = values.real_end.split('/');
-            let format = date[2] + '-' + date[1] + '-' + date[0];
-            values.real_end = moment(format).format('YYYY-MM-DD');
+        if (values.real_end) {
+            values.real_end = moment().format('YYYY-MM-DD');
         }
 
         next();
     },
     beforeUpdate: function(values, next) {
         const moment = require('moment');
-
         if (values.estimated_start) {
-            let date = values.estimated_start.split('/');
-            let format = date[2] + '-' + date[1] + '-' + date[0];
-            values.estimated_start = moment(format).format('YYYY-MM-DD');
-        }
-
+            values.estimated_start = moment().format('YYYY-MM-DD');
+        }        
         if (values.estimated_end) {
-            let date = values.estimated_end.split('/');
-            let format = date[2] + '-' + date[1] + '-' + date[0];
-            values.estimated_end = moment(format).format('YYYY-MM-DD');
+            values.estimated_end = moment().format('YYYY-MM-DD');
         }
-
         if (values.real_start) {
-            let date = values.real_start.split('/');
-            let format = date[2] + '-' + date[1] + '-' + date[0];
-            values.real_start = moment(format).format('YYYY-MM-DD');
+            values.real_start = moment().format('YYYY-MM-DD');
         }
-
         if (values.real_end) {
-            let date = values.real_end.split('/');
-            let format = date[2] + '-' + date[1] + '-' + date[0];
-            values.real_end = moment(format).format('YYYY-MM-DD');
+            values.real_end = moment().format('YYYY-MM-DD');
         }
 
         next();

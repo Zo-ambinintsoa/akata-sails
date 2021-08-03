@@ -63,7 +63,7 @@ module.exports = {
                     User.create(values).exec((createErr, user) => {
                         if (createErr) return reject(createErr);
 
-                        UserManager._generateUserToken(user, token => {
+                        UserServices._generateUserToken(user, token => {
                             resolve(token);
                             EmailService.sendWelcome(email);
                         });
@@ -82,56 +82,37 @@ module.exports = {
      * @returns {*}
      * @private
      */
-    _generateUserToken: function(user, done) {
+     _generateUserToken: async function(user, done) {
 
         // Password hash helps to invalidate token when password is changed
         const passwordHash = farmhash.hash32(user.encryptedPassword);
-
+        var users = await Users.findOne({id : user.id}).populate('profile');
+         var userType = users.profile.name;
+         switch (userType) {
+             case 'Administrator':
+                 user_type = 'ADMIN';
+                 break;
+             case 'Manager':
+                 user_type = 'MANAGER';
+                 break;
+             case 'Customer':
+                 user_type = 'CUSTOMER';
+                 break;
+             case 'Employee':
+                 user_type = 'EMPLOYEE';
+                 break;
+             default:
+                 break;
+         }
         const payload = {
-            id: user.id,
-            pwh: passwordHash
+            id: users.id,
+            email: users.email,
+            user_type: user_type
         };
-
-        const token = jwt.sign(
-            payload,
-            sails.config.jwt_secret, {
-                expiresIn: '24h' // 24 hours
-            }
-        );
+        const token = TokenService.generateToken(payload);
         return done(token);
     },
 
-
-    /**
-     * Authenticates user by a JWT token.
-     *
-     * Uses in JWT Policy
-     * @see api/policies/jwtAuth.js
-     *
-     * @param token
-     * @returns {Promise}
-     */
-    authenticateUserByToken: function(token) {
-        return new Promise((resolve, reject) => {
-            jwt.verify(token, sails.config.jwt_secret, {}, (err, tokenData) => {
-                if (err) return reject(err); // JWT parse error
-
-                User
-                    .findOne({ id: tokenData.id })
-                    .exec((err, user) => {
-                        if (err) return reject(err); // Query error
-                        if (!user) return reject(API_ERRORS.USER_NOT_FOUND);
-                        if (user.locked) return reject(API_ERRORS.USER_LOCKED);
-
-                        const passwordHash = farmhash.hash32(user.encryptedPassword);
-                        if (tokenData.pwh !== passwordHash) { // Old token, built with inactive password
-                            return reject(API_ERRORS.INACTIVE_TOKEN);
-                        }
-                        return resolve(user);
-                    });
-            });
-        });
-    },
 
 
     /**
@@ -168,7 +149,7 @@ module.exports = {
      */
     authenticateUserByPassword: function(email, password) {
         return new Promise((resolve, reject) => {
-            UserManager
+            UserServices
                 .validatePassword(email, password)
                 .then(({ isValid, user }) => {
                     if (!isValid) {
@@ -177,7 +158,7 @@ module.exports = {
                         });
                         return reject(API_ERRORS.INVALID_EMAIL_PASSWORD);
                     } else {
-                        UserManager._generateUserToken(user, token => {
+                        UserServices._generateUserToken(user, token => {
                             resolve(token);
                         });
                     }
@@ -222,7 +203,7 @@ module.exports = {
      */
     changePassword: function(email, currentPassword, newPassword) {
         return new Promise((resolve, reject) => {
-            UserManager
+            UserServices
                 .validatePassword(email, currentPassword)
                 .then(({ isValid, user }) => {
                     if (!isValid) {
@@ -236,7 +217,7 @@ module.exports = {
                                 user.lastPasswordFailure = null;
                                 user.save();
 
-                                UserManager._generateUserToken(user, token => {
+                                UserServices._generateUserToken(user, token => {
                                     resolve(token);
                                 });
                             })

@@ -6,11 +6,12 @@
 
 module.exports = {
     attributes: {
-        // currency: {
-        //     model: 'Currency',
-        // },
+        currency: {
+            type: 'string',
+        },
         pays: {
             type: "string",
+
         },
         taux: {
             type: "string",

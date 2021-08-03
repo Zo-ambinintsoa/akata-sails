@@ -31,8 +31,8 @@ module.exports = function (req, res, next) {
 		return res.badRequest(Utils.jsonErr('Format is "Authorization: Bearer [token]"'));
 	}
 
-	UserManager
-		.authenticateUserByToken(token)
+	TokenService
+		.verifyToken(token)
 		.then(user => {
 			req.userInfo = user.toJSON();
 			next();

@@ -81,11 +81,11 @@ module.exports = {
         });
     },
 
-    'create': (req, res) => {
-
+    'create':   async (req, res) => {
+        var states = await States.find({code : 1});
         Projects.create({
-            owner: req.param('owner'),
-            state: req.param('state'),
+            owner: null,
+            state: states.id,
             name: req.param('name'),
             description: req.param('description'),
             estimated_start: req.param('estimated_start'),
@@ -181,13 +181,14 @@ module.exports = {
         })
     },
 
-    'members': (req, res) => {
+    'members': async function (req, res) {
         let projectId = req.param('id');
 
-        Projectteams.find({ project: projectId }).exec((err, result) => {
+        Projectteams.find({ project: projectId }).populate('member')
+           .exec((err, result) => {
             if (err) return res.status(500).json({ error: err });
-
-            return res.status(200).json(result);
+            var project =  Projects.find({id : projectId });
+            return res.status(200).json({result : result , project : project});
         })
     },
 

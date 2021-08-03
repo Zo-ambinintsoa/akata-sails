@@ -11,7 +11,6 @@ module.exports = {
             type: 'string',
             required: true,
             maxLength: 15,
-            example: 'Funcionário'
         },
         code: {
             type: 'number',

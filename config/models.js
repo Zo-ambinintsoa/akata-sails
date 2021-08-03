@@ -12,7 +12,7 @@
  * them on a project-wide or per-model basis, see:
  * https://sailsjs.com/docs/concepts/models-and-orm/model-settings
  */
-
+ const moment = require('moment');
 module.exports.models = {
 
 
@@ -67,10 +67,10 @@ module.exports.models = {
      * > https://sailsjs.com/docs/concepts/orm/model-settings#?attributes       *
      *                                                                          *
      ***************************************************************************/
-
+    
     attributes: {
-        createdAt: { type: 'number', autoCreatedAt: true, },
-        updatedAt: { type: 'number', autoUpdatedAt: true, },
+        createdAt: { type: 'ref', columnType: 'datetime' , defaultsTo: moment(new Date()).format('MM Do YYYY, h:mm:ss a') },
+        updatedAt: { type: 'ref', columnType: 'datetime' , defaultsTo: moment(new Date()).format('MM Do YYYY, h:mm:ss a') },
         id: { type: 'string', columnName: '_id', },
         //--------------------------------------------------------------------------
         //  /\   Using MongoDB?

@@ -22,7 +22,7 @@ module.exports = {
           required: true
       },
       effort_at: {
-          type: 'string',
+        type: 'ref', columnType: 'datetime',
           required: false,
           example: 'YYY-MM-DD'
       }
@@ -31,9 +31,7 @@ module.exports = {
 
   beforeCreate: (values, next) => {
       const moment = require('moment');
-
       values.effort_at = moment().format('YYYY-MM-DD');
-
       next();
   },
 

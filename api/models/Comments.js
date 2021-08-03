@@ -21,18 +21,26 @@ module.exports = {
         type: 'string',
         required: true
     },
+    is_aproved: {
+        type: 'boolean',
+        defaultsTo: false,
+    },
     comment_at: {
-        type: 'string',
+        type: 'ref', columnType: 'datetime',
         required: false,
-        example: 'YYY-MM-DD'
-    }
+        example: 'YYY-MM-DD',
+        defaultsTo: new Date(),
+
+    },    
+    parent: {
+        model: 'Comments',
+    },
+    children: {
+        collection: 'Comments',
+        via: 'parent'
+    },
+
 
   },
-  beforeCreate: (values, next) => {
-      const moment = require('moment');
 
-      values.comment_at = moment().format('YYYY-MM-DD');
-
-      next();
-  },
 };

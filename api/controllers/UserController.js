@@ -31,9 +31,11 @@ module.exports = {
     },
 
     'create': function(req, res) {
+
         Users.create({
             profile: req.param('profile-id'),
-            name: req.param('name'),
+            firstName: req.param('firstName'),
+            lastName: req.param('lastName'),
             email: req.param('email'),
             password: req.param('password'),
             is_active: (req.param('is_active')) ? true : false
@@ -104,14 +106,14 @@ module.exports = {
     },
 
     'search': (req, res) => {
-        Users.count().exec((err, founder) => {
+        Users.count().then((err, founder) => {
             if (err) { return res.serverError(err); }
             if (!founder) { return res.notFound(err); }
             console.log('we are here ')
             Users.find({
                 where: { name: req.param('term') },
                 select: ['name', 'email']
-            }).exec((err) => {
+            }).exec((result , err) => {
                 if (err) return res.status(500).send({ error: err });
 
                 return res.status(200).send(result);

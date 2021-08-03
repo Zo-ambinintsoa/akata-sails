@@ -16,7 +16,5 @@ module.exports = {
         model: 'Projects',
         required: true
     }
-
   },
-
 };

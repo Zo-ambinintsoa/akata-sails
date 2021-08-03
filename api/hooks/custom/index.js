@@ -5,7 +5,7 @@
  * @docs        :: https://sailsjs.com/docs/concepts/extending-sails/hooks
  */
 
-module.exports = function defineCustomHook(sails) {
+ module.exports = function defineCustomHook(sails) {
 
   return {
 

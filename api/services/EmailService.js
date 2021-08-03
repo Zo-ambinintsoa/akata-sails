@@ -22,7 +22,11 @@ module.exports = {
 	sendResetToken(email, resetToken) {
 		this._send(email, 'Password reset', 'Your reset token: ' + resetToken);
 	},
-
+	sendNotification(playload) {
+		var email = playload.email;
+		var message = playload.message;
+		this._send(email, 'Akata Devis Notification', message);
+	},
 
 	_send(email, subject, text) {
 		const sendData = {

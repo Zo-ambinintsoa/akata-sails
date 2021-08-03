@@ -23,8 +23,8 @@ module.exports.routes = {
 
     /* ========= POST METHODS =========== */
     'POST /user/create': 'UserController/create',
-    'POST /user/update': 'UserController/update',
-    'POST /user/delete': 'UserController/delete',
+    'PUT /user/update': 'UserController/update',
+    'DELETE /user/delete': 'UserController/delete',
 
     /* ======== AJAX METHODS ========= */
     'GET /user/search': 'UserController/search',
@@ -33,38 +33,37 @@ module.exports.routes = {
 
     /* ================================= BEGIN: PROJECTS ====================================== */
     'GET /project': 'ProjectController/index',
-    'GET /project/new': 'ProjectController/new',
+    'POST /project/new': 'ProjectController/new',
     'GET /project/edit/:id': 'ProjectController/edit',
     'GET /project/view/:id': 'ProjectController/view',
-    'GET /project/:id': 'ProjectController/view',
 
     /* ========= POST METHODS =========== */
     'POST /project/create': 'ProjectController/create',
-    'POST /project/update': 'ProjectController/update',
-    'POST /project/delete': 'ProjectController/delete',
+    'PUT /project/update': 'ProjectController/update',
+    'DELETE /project/delete': 'ProjectController/delete',
 
     /* ========= AJAX METHODS =========== */
     'POST /project/state': 'ProjectController/state',
     'GET /project/calc': 'ProjectController/calc',
     'GET /project/members': 'ProjectController/members',
     'GET /project/team': 'ProjectController/team',
-    'GET /project/member/remove': 'ProjectController/remove',
+    'DELETE /project/member/remove': 'ProjectController/remove',
     /* ================================= END: PROJECTS ====================================== */
 
     /* ================================= BEGIN: TASKS ====================================== */
     'GET /task/p/:projectId': 'TaskController/index',
-    'GET /task/new/:projectId': 'TaskController/new',
+    'POST /task/new/:projectId': 'TaskController/new',
     'GET /task/:id': 'TaskController/view',
     'GET /task/edit/:p/:id': 'TaskController/edit',
 
     /* ================ POST METHODS ================= */
     'POST /task/create': 'TaskController/create',
-    'POST /task/update': 'TaskController/update',
-    'POST /task/delete': 'TaskController/delete',
-    'POST /task/status': 'TaskController/status',
+    'PUT /task/update': 'TaskController/update',
+    'DELETE /task/delete': 'TaskController/delete',
+    'PUT /task/status': 'TaskController/status',
     'POST /task/comment': 'TaskController/comment',
     'POST /task/effort': 'TaskController/effort',
-    'GET /task/seteffort': 'TaskController/updateEffort',
+    'PUT /task/seteffort': 'TaskController/updateEffort',
     'GET /task/task': 'TaskController/task',
     'GET /task/comment/list': 'TaskController/commentList',
     'GET /task/effort/list': 'TaskController/effortList',
@@ -76,6 +75,7 @@ module.exports.routes = {
     /* ================================= BEGIN: LOGIN ======================================= */
     'GET /login': 'LoginController/login',
     'POST /login': 'LoginController/login',
+    'POST /notify': 'NotificationController/notify',
 
 
 
@@ -87,7 +87,7 @@ module.exports.routes = {
     /* ========= POST METHODS =========== */
     'POST /tariff/create': 'TariffController/create',
     'PUT /tariff/update/:id': 'TariffController/update',
-    'POST /tariff/delete/:id': 'TariffController/delete',
+    'DELETE /tariff/delete/:id': 'TariffController/delete',
     /* ================================= END: TASKS ====================================== */
     //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
     //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

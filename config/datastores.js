@@ -57,7 +57,7 @@ module.exports.datastores = {
         port: 27017,
         user: '', //optional
         password: '', //optional
-        database: 'akata-base' //optional
+        database: 'akata-base-2' //optional
 
     },
 
