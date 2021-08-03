@@ -52,6 +52,7 @@ module.exports.routes = {
 
     /* ================================= BEGIN: TASKS ====================================== */
     'GET /task/p/:projectId': 'TaskController/index',
+    'GET /task': 'TaskController/allTask',
     'POST /task/new/:projectId': 'TaskController/new',
     'GET /task/:id': 'TaskController/view',
     'GET /task/edit/:p/:id': 'TaskController/edit',

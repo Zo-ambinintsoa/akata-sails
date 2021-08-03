@@ -10,7 +10,6 @@ module.exports = {
         const moment = require('moment');
         const math = require('mathjs');
         const _LIMIT_ = 2;
-        let status = [];
         let total = 0;
         let projectId = req.param('projectId');
 
@@ -279,6 +278,29 @@ module.exports = {
             return res.status(200).json({ tasks: result });
         })
 
-    }
+    },
+
+    
+    'allTask':  (req, res) => {
+
+        const moment = require('moment');
+        const math = require('mathjs');
+        const _LIMIT_ = 3;
+        let total = 0;
+
+         Tasks.find().limit(_LIMIT_).populate('project').populate('status').populate('executor').populate('owner').exec((err, result) => {
+            if (err) {
+                return res.serverError(err);
+            }
+
+            Tasks.count().exec((err, totalRecords) => {
+                total = totalRecords;
+                return res.send({ tasks: result, total: total, moment: moment });
+            });
+
+        });
+
+    },
+
 
 };
