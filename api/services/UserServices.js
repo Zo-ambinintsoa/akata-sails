@@ -2,9 +2,7 @@ const jwt = require('jsonwebtoken');
 const shortid = require('shortid');
 const moment = require('moment');
 const farmhash = require('farmhash');
-
 const API_ERRORS = require('../constants/APIErrors');
-
 const LOCK_INTERVAL_SEC = 120;
 const LOCK_TRY_COUNT = 5;
 
@@ -21,12 +19,10 @@ function doesUsernameExist(email) {
 
 function updateUserLockState(user, done) {
     const now = moment().utc();
-
     let prevFailure = null;
     if (user.lastPasswordFailure) {
         prevFailure = moment(user.lastPasswordFailure);
     }
-
     if (prevFailure !== null && now.diff(prevFailure, 'seconds') < LOCK_INTERVAL_SEC) {
         user.passwordFailures += 1;
 
@@ -38,7 +34,6 @@ function updateUserLockState(user, done) {
         // reset the failed attempts
         user.passwordFailures = 1;
     }
-
     user.lastPasswordFailure = now.toDate();
     user.save(done);
 }
@@ -59,7 +54,6 @@ module.exports = {
                     if (exists) {
                         return reject(API_ERRORS.EMAIL_IN_USE);
                     }
-
                     User.create(values).exec((createErr, user) => {
                         if (createErr) return reject(createErr);
 
@@ -83,7 +77,6 @@ module.exports = {
      * @private
      */
      _generateUserToken: async function(user, done) {
-
         // Password hash helps to invalidate token when password is changed
         const passwordHash = farmhash.hash32(user.encryptedPassword);
         var users = await Users.findOne({id : user.id}).populate('profile');
@@ -113,8 +106,6 @@ module.exports = {
         return done(token);
     },
 
-
-
     /**
      * Validates user password
      * @param email
@@ -139,7 +130,6 @@ module.exports = {
                 });
         });
     },
-
 
     /**
      * Authenticates user by email and password.
@@ -166,7 +156,6 @@ module.exports = {
                 .catch(reject);
         });
     },
-
 
     /**
      * Generates password reset token

@@ -33,8 +33,8 @@ module.exports = {
             });
     },
 
-    show: function(req, res, next) {
-        Tariff.findOne(req.param('id')).exec(
+    show: function(req, res) {
+        Tariff.findOne(req.param('id')).populate('project').populate('member').exec(
             function(tariff, err) {
                 console.log('all clear');
                 if (err) return res.send(err);
@@ -42,12 +42,13 @@ module.exports = {
                 return res.send(tariff);
             });
     },
-    update: function(req, res, next) {
+    update: function(req, res) {
 
         const {
             pays,
             taux,
             TVA,
+            project
         } = req.body;
 
         console.log('creating tariff');
@@ -56,6 +57,7 @@ module.exports = {
             pays: pays,
             taux: taux,
             TVA: TVA,
+            project: project,
         };
         Tariff.update(req.param('id'), playload).exec(
             function(tariff, err) {
@@ -66,7 +68,7 @@ module.exports = {
             });
     },
 
-    delete: function(req, res, next) {
+    delete: function(req, res) {
         Tariff.destroy(req.param('id')).exec(
             function(tariff, err) {
                 console.log('all clear');
@@ -75,7 +77,7 @@ module.exports = {
                 return res.send(tariff);
             });
     },
-    list: function(req, res, next) {
+    list: function(req, res) {
         Tariff.find().exec(
             function(tariff, err) {
                 console.log('all clear');

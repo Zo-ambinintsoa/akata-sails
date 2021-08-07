@@ -12,6 +12,9 @@ module.exports = {
         model: 'Users',
         required: true
     },
+    tariffs: {
+      model: 'Tariff'
+    },
     project: {
         model: 'Projects',
         required: true

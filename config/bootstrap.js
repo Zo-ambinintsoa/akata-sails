@@ -59,10 +59,10 @@
 var profile = await Profiles.find(); 
 
 await Users.createEach([
-    { email: 'Sepxe@admin.com', name: 'Spexe', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('abc123') , profile :profile[0].id},
-    { email: 'ambinintsoa.m.herizo@gmail.com', name: 'Zo ambinintsoa', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('abc123') , profile :profile[0].id},
-    { email: 'Denis@admin.com', name: 'Denis', isSuperAdmin: false, password: await sails.helpers.passwords.hashPassword('abc133') , profile :profile[1].id},
-    { email: 'Rivo@admin.com', name: 'Rivo', isSuperAdmin: false, password: await sails.helpers.passwords.hashPassword('abc133') , profile :profile[2].id},
+    { email: 'Sepxe@admin.com', name: 'Spexe', isSuperAdmin: true, password: 'spexe avao' , profile :profile[0].id},
+    { email: 'ambinintsoa.m.herizo@gmail.com', name: 'Zo ambinintsoa', isSuperAdmin: true, password: 'zobest', profile :profile[0].id},
+    { email: 'Denis@admin.com', name: 'Denis', isSuperAdmin: false, password: 'bandy gidra' , profile :profile[1].id},
+    { email: 'Rivo@admin.com', name: 'Rivo', isSuperAdmin: false, password: 'ny henjana' , profile :profile[2].id},
 ]);
 
 var user = await Users.find();

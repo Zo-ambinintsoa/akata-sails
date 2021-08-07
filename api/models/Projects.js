@@ -78,7 +78,7 @@ module.exports = {
             required: false,
             defaultsTo: 0,
             example: 55 // hours consumed in the project, will be calculated based on the tasks performed 
-        }
+        },
 
     },
     beforeCreate: function(values, next) {

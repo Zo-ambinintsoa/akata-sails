@@ -18,20 +18,8 @@
    generateToken: function (payload) {
      var secret ;
      var expirTime ;
-     switch (playload.user_type) {
-       case 'ADMIN':
-         secret = sails.config.constant.token_secret.ADMIN;
-         break;
-       case 'EMPLOYE':
-         secret = sails.config.constant.token_secret.EMPLOYE;
-         break;
-       case 'CLIENT':
-         secret = sails.config.constant.token_secret.CLIENT;
-         break;
-       default:
-         break;
-     }
-     expirTime = sails.config.constant.token_secret.expiration; 
+     secret = sails.config.constant.token.SECRET;
+     expirTime = sails.config.constant.token.expiration; 
      return jwt.sign(payload, secret, {
        expiresIn: expirTime,
      });
@@ -45,7 +33,7 @@
     */
    verifyToken: function (token, callback) {
     return new Promise((resolve, reject) => {
-      jwt.verify(token, sails.config.jwt_secret, {}, (err, tokenData) => {
+      jwt.verify(token, sails.config.constant.token.SECRET, {}, (err, tokenData) => {
           if (err) return reject(err); 
 
           User

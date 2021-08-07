@@ -3,6 +3,18 @@
  *
  * A user who can log in to this application.
  */
+ const bcrypt = require('bcrypt');
+
+ function generatePasswordHash(password) {
+     return bcrypt.genSalt(10) // 10 is default
+         .then((salt) => {
+             return bcrypt.hash(password, salt);
+         })
+         .then(hash => {
+             return Promise.resolve(hash);
+         });
+ }
+
 
 module.exports = {
     attributes: {
@@ -60,22 +72,52 @@ module.exports = {
             type: 'string'
         },
     },
+
+
     customToJSON: function() {
-        return _.omit(this, ['password', 'lastPasswordFailure', 'isSuperAdmin', 'is_active', 'locked', 'resetToken']);
+        return _.omit(this, ['password', 'lastPasswordFailure', 'isSuperAdmin', 'is_active', 'locked', 'resetToken', 'passwordFailures']);
     },
 
-    beforeCreate: function(values, next) {
-        let crypto = require('crypto');
-        values.password = crypto.createHash('sha256').update(values.password).digest('base64');;
+/**
+		 * Validates user password with stored password hash
+		 * @param password
+		 * @returns {Promise}
+		 */
+		validatePassword: function (password) {
+			return bcrypt.compare(password, this.toObject().encryptedPassword);
 
-        next();
-    },
-    beforeUpdate: function(values, next) {
-        let crypto = require('crypto');
-        values.password = crypto.createHash('sha256').update(values.password).digest('base64');;
+		},
 
-        next();
-    },
+
+		/**
+		 * Set user password
+		 * @param password
+		 * @returns {Promise}
+		 */
+		setPassword: function (password) {
+			return generatePasswordHash(password)
+				.then(hash => {
+					this.encryptedPassword = hash;
+				});
+		},
+
+	/**
+	 * Encrypt password before creating a User
+	 * @param values
+	 * @param next
+	 */
+	beforeCreate: function (values, next) {
+		generatePasswordHash(values.password)
+			.then(hash => {
+				delete(values.password);
+				values.encryptedPassword = hash;
+				next();
+			})
+			.catch(err => {
+				/* istanbul ignore next */
+				next(err);
+			});
+	} ,
 
     /* ===================== GENERATE CODE =============================================================================================================================================================================================
     db.users.save([{profile: 'hashid of administrador profile', name: 'Administrator', email: 'email@administrador', password: 'sha256 hashad password', is_active: true} ])

@@ -218,4 +218,16 @@ module.exports = {
             return res.ok();
         });
     },
+    'tariffLits': (req, res) => {
+        let projectId = req.param('Pid');
+
+        Projectteams.find({ project: projectId }).populate('member')
+           .exec((err, result) => {
+            if (err) return res.status(500).json({ error: err });
+            var project =  Projects.find({id : projectId });
+            return res.status(200).json({result : result , project : project});
+        })
+    },
+
+
 };
