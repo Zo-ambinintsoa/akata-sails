@@ -31,9 +31,7 @@ module.exports = {
     'view': (req, res) => {
 
         const moment = require('moment');
-
         let status;
-        let teams;
         let mapStatus = [];
 
         Status.find().exec((err, result) => {
@@ -120,7 +118,6 @@ module.exports = {
             result.forEach((item) => {
                 team.push(item.member);
             })
-
             users = team;
         });
 

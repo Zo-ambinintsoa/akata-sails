@@ -28,6 +28,6 @@ $ npm install
 
 Now change the config/datastores.js to your mongodb connection.
 
-That's it, enjoy the Youtask.
+That's it, enjoy Your Project Task Manager.
 # akata-sails
 # akata-sails

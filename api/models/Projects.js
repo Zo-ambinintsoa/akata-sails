@@ -13,6 +13,10 @@ module.exports = {
             model: 'Users',
             required: true
         },
+        task: {
+            collection: 'tasks',
+            via: 'project'
+        },
         state: {
             model: 'States'
         },

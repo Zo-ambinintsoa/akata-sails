@@ -15,7 +15,6 @@ module.exports = {
 
         Status.find().where({ 'code': { '<': 4 } }).exec((err, result) => {
             if (err) return res.serverError(err);
-
             result.forEach((item) => {
                 status.push(item.id);
             })
@@ -35,12 +34,28 @@ module.exports = {
     'admin': (req, res) => {
 
         const moment = require('moment');
-        const _LIMIT_ = 20;
-        let total = 0;
-        Projects.find().limit(_LIMIT_).populate('state').populate('owner').exec((err, result) => {
+        const _LIMIT_ = 3;
+        let total = 0;        
+
+        Projects.find().limit(_LIMIT_).populate('state').populate('owner').populate('task').exec((err, Presult) => {
             if (err) {
                 return res.serverError(err);
             }
+
+            Tasks.find().limit(_LIMIT_).populate('owner').exec((err, Tresult) => {
+                if (err) {
+                    return res.serverError(err);
+                }
+                Tasks.count().exec((err, totalRecords) => {
+                    if (err) {
+                        return res.serverError(err);
+                    }
+                    total = totalRecords;
+                    return res.send({ projects: Presult, moment: moment, total: total, tasks: Tresult });
+                });
+    
+            });
+            
             Projects.count().exec((err, totalRecords) => {
                 if (err) {
                     return res.serverError(err);
