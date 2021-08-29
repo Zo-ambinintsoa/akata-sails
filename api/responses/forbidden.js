@@ -15,20 +15,14 @@
 module.exports = function forbidden (data, options) {
 
   // Get access to `req`, `res`, & `sails`
-  var req = this.req;
   var res = this.res;
-  var sails = req._sails;
 
   // Set status code
   res.status(403);
   if (data !== undefined) {
-    sails.log.verbose('Sending 403 ("Forbidden") response: \n',data);
+    return res.status(403).json('403 ("Forbidden") response');
   }
-  else sails.log.verbose('Sending 403 ("Forbidden") response');
-  if (sails.config.environment === 'production' && sails.config.keepResponseErrors !== true) {
-    data = undefined;
-  }
-  return res.json(data);
+  else return res.status(403).json('403 ("Forbidden") response' + data);
 
 };
 

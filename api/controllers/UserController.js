@@ -33,12 +33,10 @@ module.exports = {
     'create': function(req, res) {
 
         Users.create({
-            profile: req.param('profile-id'),
-            firstName: req.param('firstName'),
-            lastName: req.param('lastName'),
+            profile: req.param('profile'),
+            lastName: req.param('name'),
             email: req.param('email'),
             password: req.param('password'),
-            is_active: (req.param('is_active')) ? true : false
         }, function userCreated(err, user) {
             if (err) {
                 return res.serverError(err);
@@ -49,8 +47,6 @@ module.exports = {
     },
 
     'edit': function(req, res) {
-        var objectReturn = {};
-
         Profiles.find().exec(function(err, result) {
             if (err) {
                 return res.serverError(err);
@@ -60,7 +56,7 @@ module.exports = {
                 return res.notFound();
             }
 
-            objectReturn.profiles = result;
+            profiles = result;
         });
 
         Users.findOne(req.param('id')).populate('profile').exec(function(err, user) {
@@ -72,26 +68,27 @@ module.exports = {
                 return res.notFound();
             }
 
-            objectReturn.user = user;
+            user = user;
 
-            return res.send(objectReturn);
+            return res.send({ profile : profiles , user : user });
         });
 
         return;
     },
 
     'update': function(req, res) {
-        Users.update({ id: req.param('id') }, {
-            name: req.param('name'),
-            email: req.param('email'),
-            is_active: (req.param('is_active')) ? true : false,
-            profile: req.param('profile-id'),
-            password: req.param('password')
-        }).exec(function(err) {
-            if (err) { return res.serverError(err); }
 
-            return res.send({ message: 'user updated' });
-        });
+        return console.log( req.param('id') + ' name : ' + req.param('name') + ' email :' +req.param('email'));
+        // Users.update({ id: req.param('id') }, {
+        //     name: req.param('name'),
+        //     email: req.param('email'),
+        //     profile: req.param('profile'),
+        //     password: req.param('password')
+        // }).exec(function(err) {
+        //     if (err) { return res.serverError(err); }
+
+        //     return res.ok({ message: 'user updated' });
+        // });
     },
 
     'delete': function(req, res) {

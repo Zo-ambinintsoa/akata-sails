@@ -17,18 +17,18 @@ module.exports.routes = {
     'GET /': 'HomeController/index',
 
     /* ================================= BEGIN: USERS ====================================== */
-    'GET /user': 'UserController/index',
-    'GET /user/new': 'UserController/new',
-    'GET /user/edit/:id': 'UserController/edit',
+    'GET /users': 'UserController/index',
+    'GET /users/new': 'UserController/new',
+    'GET /users/edit/:id': 'UserController/edit',
 
     /* ========= POST METHODS =========== */
-    'POST /user/create': 'UserController/create',
-    'PUT /user/update': 'UserController/update',
-    'DELETE /user/delete': 'UserController/delete',
+    'POST /users/create': 'UserController/create',
+    'POST /users/update/:id': 'UserController/update',
+    'DELETE /users/delete': 'UserController/delete',
 
     /* ======== AJAX METHODS ========= */
-    'GET /user/search': 'UserController/search',
-    'GET /user/list': 'UserController/list',
+    'GET /users/search': 'UserController/search',
+    'GET /users/list': 'UserController/list',
     /* ================================= END: USERS ====================================== */
 
     /* ================================= BEGIN: PROJECTS ====================================== */

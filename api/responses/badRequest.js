@@ -17,21 +17,14 @@
 
 module.exports = function badRequest(data, options) {
 
-  // Get access to `req`, `res`, & `sails`
-  var req = this.req;
   var res = this.res;
-  var sails = req._sails;
 
   res.status(400);
-
-  if (data !== undefined) {
-    sails.log.verbose('Sending 400 ("Bad Request") response: \n',data);
-  }
-  else sails.log.verbose('Sending 400 ("Bad Request") response');
-
-  if (sails.config.environment === 'production' && sails.config.keepResponseErrors !== true) {
-    data = undefined;
-  }
-  return res.json(data);
+    // Log error to console
+    if (data !== undefined) {
+      return res.status(400).json( '400 ("Bad Request") response ');
+    }
+    else return res.status(400).json( '400 ("Bad Request") response ' + data);
+  
 };
 

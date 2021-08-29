@@ -21,16 +21,7 @@
  * ```
  */
 module.exports = function unauthorized() {
-
-    var req = this.req;
     var res = this.res;
     res.status(401);
-    sails.log.verbose('Ran custom response: res.unauthorized()');
-    if (sails.config.environment === 'production' && sails.config.keepResponseErrors !== true) {
-        data = undefined;
-      }
-    return res.sendStatus(401);
-    // Or log them out (if necessary) and then redirect to the login page.
-
-
+    return res.status(401).send('look like you are not authorized to perform that operation');
 };

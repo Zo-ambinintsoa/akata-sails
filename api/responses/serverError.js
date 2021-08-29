@@ -15,22 +15,16 @@
 module.exports = function serverError (data, options) {
 
   // Get access to `req`, `res`, & `sails`
-  var req = this.req;
   var res = this.res;
-  var sails = req._sails;
 
   // Set status code
   res.status(500);
 
   // Log error to console
   if (data !== undefined) {
-    sails.log.error('Sending 500 ("Server Error") response: \n',data);
+    return res.status(500).json('500 ("Server Error") response');
   }
-  else sails.log.error('Sending empty 500 ("Server Error") response');
-  if (sails.config.environment === 'production' && sails.config.keepResponseErrors !== true) {
-    data = undefined;
-  }
-  return res.json(data);
+  else  return res.status(500).json('500 ("Server Error") response' + data);
 
 
 };

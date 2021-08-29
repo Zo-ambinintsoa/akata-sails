@@ -14,16 +14,11 @@
 module.exports = function sendOK (data, options) {
 
   // Get access to `req`, `res`, & `sails`
-  var req = this.req;
   var res = this.res;
-  var sails = req._sails;
 
-  sails.log.silly('res.ok() :: Sending 200 ("OK") response');
-
-  // Set status code
-  res.status(200);
-  if (sails.config.environment === 'production' && sails.config.keepResponseErrors !== true) {
-    data = undefined;
+  if (data !== undefined) {
+    return res.status(200).json( '200 ("OK") response ');
   }
-  return res.json(data);
+  else return res.status(200).json( '200 ("OK") response ' + data);
+
 };

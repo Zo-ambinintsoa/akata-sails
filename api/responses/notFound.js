@@ -22,21 +22,15 @@ module.exports = function notFound (data, options) {
   // Get access to `req`, `res`, & `sails`
   var req = this.req;
   var res = this.res;
-  var sails = req._sails;
 
   // Set status code
   res.status(404);
 
   // Log error to console
   if (data !== undefined) {
-    sails.log.verbose('Sending 404 ("Not Found") response: \n',data);
+    return res.status(404).json( 'operation Not Found  ');
   }
-  else sails.log.verbose('Sending 404 ("Not Found") response');
-
-  if (sails.config.environment === 'production' && sails.config.keepResponseErrors !== true) {
-    data = undefined;
-  }
-  return res.json(data);
+  else return res.status(404).json( 'operation Not Found  ' + data);
 
 
 };

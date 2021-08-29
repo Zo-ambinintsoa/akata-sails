@@ -14,17 +14,10 @@
 module.exports = function created (data, options) {
 
   // Get access to `req`, `res`, & `sails`
-  var req = this.req;
   var res = this.res;
-  var sails = req._sails;
 
-  sails.log.silly('res.created() :: Sending 201 ("CREATED") response');
+  sails.log.silly('Sending 201 ("CREATED") response');
 
-  // Set status code
-  res.status(201);
-  if (sails.config.environment === 'production' && sails.config.keepResponseErrors !== true) {
-    data = undefined;
-  }
-  return res.json(data);
+  return res.status(201).json('201 ("CREATED") response');
 
 };
