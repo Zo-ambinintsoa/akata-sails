@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/perimeters",
+      "handler": "perimeter.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/perimeters/count",
+      "handler": "perimeter.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/perimeters/:id",
+      "handler": "perimeter.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/perimeters",
+      "handler": "perimeter.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/perimeters/:id",
+      "handler": "perimeter.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/perimeters/:id",
+      "handler": "perimeter.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

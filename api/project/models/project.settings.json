@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "name": "Project",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name_project": {
+      "type": "string"
+    },
+    "membres": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "projects",
+      "dominant": true
+    },
+    "code_pays": {
+      "type": "string"
+    },
+    "project_type": {
+      "model": "project-types"
+    }
+  }
+}

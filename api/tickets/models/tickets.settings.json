@@ -1,0 +1,70 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tickets",
+  "info": {
+    "name": "Tickets",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name_tikcet": {
+      "type": "string"
+    },
+    "project": {
+      "model": "project"
+    },
+    "assigned_to": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "createdby": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "percentage_of_completion": {
+      "type": "integer"
+    },
+    "estimate_in_hours": {
+      "type": "integer"
+    },
+    "executed": {
+      "type": "integer"
+    },
+    "status_project": {
+      "model": "status-project"
+    },
+    "priority": {
+      "model": "priority"
+    },
+    "severity": {
+      "model": "severity"
+    },
+    "descriptions": {
+      "type": "richtext"
+    },
+    "photos": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "perimeter": {
+      "model": "perimeter"
+    },
+    "commentaires": {
+      "via": "ticket",
+      "collection": "commentaires"
+    }
+  }
+}
